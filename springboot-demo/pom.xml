@@ -38,6 +38,24 @@
 			<version>1.1.1</version>
 		</dependency>
 
+		<!-- swagger2 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		<!-- Thymeleaf -->
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+		</dependency>
+
 		<!--spring-session <dependency> <groupId>org.springframework.session</groupId> 
 			<artifactId>spring-session-data-redis</artifactId> </dependency> -->
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageHelper;
 
@@ -20,6 +21,7 @@ import io.vergil.common.util.SpringContextUtil;
 @SuppressWarnings("unchecked")
 public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseService<Record, Example> {
 
+	@Autowired
 	public Mapper mapper;
 
 	@Override
