@@ -17,6 +17,7 @@ import io.vergil.common.util.SpringContextUtil;
 /**
  * 实现BaseService抽象类 Created by zhaowei on 2017/01/07.
  */
+@SuppressWarnings("unchecked")
 public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseService<Record, Example> {
 
 	public Mapper mapper;

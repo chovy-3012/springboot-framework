@@ -13,18 +13,12 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.velocity.VelocityContext;
-import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.internal.DefaultShellCallback;
 
 import io.vergil.common.util.JdbcUtil;
 import io.vergil.common.util.StringUtil;
 import io.vergil.common.util.VelocityUtil;
 
 public class ServiceGenerator {
-	// generatorConfig模板路径
-	private static String generatorConfig_vm = "/template/generatorConfig.vm";
 	// Service模板路径
 	private static String service_vm = "/template/Service.vm";
 	// ServiceMock模板路径

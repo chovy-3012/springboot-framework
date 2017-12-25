@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.vergil.springboot.demo.dao.mapper.CoreUserMapper" >
+  <resultMap id="BaseResultMap" type="io.vergil.springboot.demo.dao.model.CoreUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="guid" property="guid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="mobilephone" property="mobilephone" jdbcType="VARCHAR" />
+    <result column="enable" property="enable" jdbcType="CHAR" />
+    <result column="admin" property="admin" jdbcType="CHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="parent_userid" property="parentUserid" jdbcType="INTEGER" />
+    <result column="org_id" property="orgId" jdbcType="INTEGER" />
+    <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="workid" property="workid" jdbcType="VARCHAR" />
+    <result column="page1" property="page1" jdbcType="VARCHAR" />
+    <result column="page2" property="page2" jdbcType="VARCHAR" />
+    <result column="page3" property="page3" jdbcType="VARCHAR" />
+    <result column="page4" property="page4" jdbcType="VARCHAR" />
+    <result column="page5" property="page5" jdbcType="VARCHAR" />
+    <result column="page6" property="page6" jdbcType="VARCHAR" />
+    <result column="page7" property="page7" jdbcType="VARCHAR" />
+    <result column="page8" property="page8" jdbcType="VARCHAR" />
+    <result column="page9" property="page9" jdbcType="VARCHAR" />
+    <result column="page10" property="page10" jdbcType="VARCHAR" />
+    <result column="page11" property="page11" jdbcType="VARCHAR" />
+    <result column="page12" property="page12" jdbcType="VARCHAR" />
+    <result column="page13" property="page13" jdbcType="VARCHAR" />
+    <result column="page14" property="page14" jdbcType="VARCHAR" />
+    <result column="page15" property="page15" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, guid, name, loginname, password, phone, mobilephone, enable, admin, user_type, 
+    parent_userid, org_id, department_id, workid, page1, page2, page3, page4, page5, 
+    page6, page7, page8, page9, page10, page11, page12, page13, page14, page15
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="io.vergil.springboot.demo.dao.model.CoreUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from core_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from core_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from core_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="io.vergil.springboot.demo.dao.model.CoreUserExample" >
+    delete from core_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="io.vergil.springboot.demo.dao.model.CoreUser" >
+    insert into core_user (id, guid, name, 
+      loginname, password, phone, 
+      mobilephone, enable, admin, 
+      user_type, parent_userid, org_id, 
+      department_id, workid, page1, 
+      page2, page3, page4, 
+      page5, page6, page7, 
+      page8, page9, page10, 
+      page11, page12, page13, 
+      page14, page15)
+    values (#{id,jdbcType=INTEGER}, #{guid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{loginname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{mobilephone,jdbcType=VARCHAR}, #{enable,jdbcType=CHAR}, #{admin,jdbcType=CHAR}, 
+      #{userType,jdbcType=VARCHAR}, #{parentUserid,jdbcType=INTEGER}, #{orgId,jdbcType=INTEGER}, 
+      #{departmentId,jdbcType=VARCHAR}, #{workid,jdbcType=VARCHAR}, #{page1,jdbcType=VARCHAR}, 
+      #{page2,jdbcType=VARCHAR}, #{page3,jdbcType=VARCHAR}, #{page4,jdbcType=VARCHAR}, 
+      #{page5,jdbcType=VARCHAR}, #{page6,jdbcType=VARCHAR}, #{page7,jdbcType=VARCHAR}, 
+      #{page8,jdbcType=VARCHAR}, #{page9,jdbcType=VARCHAR}, #{page10,jdbcType=VARCHAR}, 
+      #{page11,jdbcType=VARCHAR}, #{page12,jdbcType=VARCHAR}, #{page13,jdbcType=VARCHAR}, 
+      #{page14,jdbcType=VARCHAR}, #{page15,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="io.vergil.springboot.demo.dao.model.CoreUser" >
+    insert into core_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="guid != null" >
+        guid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="loginname != null" >
+        loginname,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="mobilephone != null" >
+        mobilephone,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+      <if test="admin != null" >
+        admin,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="parentUserid != null" >
+        parent_userid,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="workid != null" >
+        workid,
+      </if>
+      <if test="page1 != null" >
+        page1,
+      </if>
+      <if test="page2 != null" >
+        page2,
+      </if>
+      <if test="page3 != null" >
+        page3,
+      </if>
+      <if test="page4 != null" >
+        page4,
+      </if>
+      <if test="page5 != null" >
+        page5,
+      </if>
+      <if test="page6 != null" >
+        page6,
+      </if>
+      <if test="page7 != null" >
+        page7,
+      </if>
+      <if test="page8 != null" >
+        page8,
+      </if>
+      <if test="page9 != null" >
+        page9,
+      </if>
+      <if test="page10 != null" >
+        page10,
+      </if>
+      <if test="page11 != null" >
+        page11,
+      </if>
+      <if test="page12 != null" >
+        page12,
+      </if>
+      <if test="page13 != null" >
+        page13,
+      </if>
+      <if test="page14 != null" >
+        page14,
+      </if>
+      <if test="page15 != null" >
+        page15,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="guid != null" >
+        #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null" >
+        #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=CHAR},
+      </if>
+      <if test="admin != null" >
+        #{admin,jdbcType=CHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserid != null" >
+        #{parentUserid,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="workid != null" >
+        #{workid,jdbcType=VARCHAR},
+      </if>
+      <if test="page1 != null" >
+        #{page1,jdbcType=VARCHAR},
+      </if>
+      <if test="page2 != null" >
+        #{page2,jdbcType=VARCHAR},
+      </if>
+      <if test="page3 != null" >
+        #{page3,jdbcType=VARCHAR},
+      </if>
+      <if test="page4 != null" >
+        #{page4,jdbcType=VARCHAR},
+      </if>
+      <if test="page5 != null" >
+        #{page5,jdbcType=VARCHAR},
+      </if>
+      <if test="page6 != null" >
+        #{page6,jdbcType=VARCHAR},
+      </if>
+      <if test="page7 != null" >
+        #{page7,jdbcType=VARCHAR},
+      </if>
+      <if test="page8 != null" >
+        #{page8,jdbcType=VARCHAR},
+      </if>
+      <if test="page9 != null" >
+        #{page9,jdbcType=VARCHAR},
+      </if>
+      <if test="page10 != null" >
+        #{page10,jdbcType=VARCHAR},
+      </if>
+      <if test="page11 != null" >
+        #{page11,jdbcType=VARCHAR},
+      </if>
+      <if test="page12 != null" >
+        #{page12,jdbcType=VARCHAR},
+      </if>
+      <if test="page13 != null" >
+        #{page13,jdbcType=VARCHAR},
+      </if>
+      <if test="page14 != null" >
+        #{page14,jdbcType=VARCHAR},
+      </if>
+      <if test="page15 != null" >
+        #{page15,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="io.vergil.springboot.demo.dao.model.CoreUserExample" resultType="java.lang.Integer" >
+    select count(*) from core_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update core_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.guid != null" >
+        guid = #{record.guid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginname != null" >
+        loginname = #{record.loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilephone != null" >
+        mobilephone = #{record.mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enable != null" >
+        enable = #{record.enable,jdbcType=CHAR},
+      </if>
+      <if test="record.admin != null" >
+        admin = #{record.admin,jdbcType=CHAR},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentUserid != null" >
+        parent_userid = #{record.parentUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentId != null" >
+        department_id = #{record.departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workid != null" >
+        workid = #{record.workid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page1 != null" >
+        page1 = #{record.page1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page2 != null" >
+        page2 = #{record.page2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page3 != null" >
+        page3 = #{record.page3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page4 != null" >
+        page4 = #{record.page4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page5 != null" >
+        page5 = #{record.page5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page6 != null" >
+        page6 = #{record.page6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page7 != null" >
+        page7 = #{record.page7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page8 != null" >
+        page8 = #{record.page8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page9 != null" >
+        page9 = #{record.page9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page10 != null" >
+        page10 = #{record.page10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page11 != null" >
+        page11 = #{record.page11,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page12 != null" >
+        page12 = #{record.page12,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page13 != null" >
+        page13 = #{record.page13,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page14 != null" >
+        page14 = #{record.page14,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page15 != null" >
+        page15 = #{record.page15,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update core_user
+    set id = #{record.id,jdbcType=INTEGER},
+      guid = #{record.guid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      loginname = #{record.loginname,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      mobilephone = #{record.mobilephone,jdbcType=VARCHAR},
+      enable = #{record.enable,jdbcType=CHAR},
+      admin = #{record.admin,jdbcType=CHAR},
+      user_type = #{record.userType,jdbcType=VARCHAR},
+      parent_userid = #{record.parentUserid,jdbcType=INTEGER},
+      org_id = #{record.orgId,jdbcType=INTEGER},
+      department_id = #{record.departmentId,jdbcType=VARCHAR},
+      workid = #{record.workid,jdbcType=VARCHAR},
+      page1 = #{record.page1,jdbcType=VARCHAR},
+      page2 = #{record.page2,jdbcType=VARCHAR},
+      page3 = #{record.page3,jdbcType=VARCHAR},
+      page4 = #{record.page4,jdbcType=VARCHAR},
+      page5 = #{record.page5,jdbcType=VARCHAR},
+      page6 = #{record.page6,jdbcType=VARCHAR},
+      page7 = #{record.page7,jdbcType=VARCHAR},
+      page8 = #{record.page8,jdbcType=VARCHAR},
+      page9 = #{record.page9,jdbcType=VARCHAR},
+      page10 = #{record.page10,jdbcType=VARCHAR},
+      page11 = #{record.page11,jdbcType=VARCHAR},
+      page12 = #{record.page12,jdbcType=VARCHAR},
+      page13 = #{record.page13,jdbcType=VARCHAR},
+      page14 = #{record.page14,jdbcType=VARCHAR},
+      page15 = #{record.page15,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="io.vergil.springboot.demo.dao.model.CoreUser" >
+    update core_user
+    <set >
+      <if test="guid != null" >
+        guid = #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        loginname = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null" >
+        mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=CHAR},
+      </if>
+      <if test="admin != null" >
+        admin = #{admin,jdbcType=CHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserid != null" >
+        parent_userid = #{parentUserid,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="workid != null" >
+        workid = #{workid,jdbcType=VARCHAR},
+      </if>
+      <if test="page1 != null" >
+        page1 = #{page1,jdbcType=VARCHAR},
+      </if>
+      <if test="page2 != null" >
+        page2 = #{page2,jdbcType=VARCHAR},
+      </if>
+      <if test="page3 != null" >
+        page3 = #{page3,jdbcType=VARCHAR},
+      </if>
+      <if test="page4 != null" >
+        page4 = #{page4,jdbcType=VARCHAR},
+      </if>
+      <if test="page5 != null" >
+        page5 = #{page5,jdbcType=VARCHAR},
+      </if>
+      <if test="page6 != null" >
+        page6 = #{page6,jdbcType=VARCHAR},
+      </if>
+      <if test="page7 != null" >
+        page7 = #{page7,jdbcType=VARCHAR},
+      </if>
+      <if test="page8 != null" >
+        page8 = #{page8,jdbcType=VARCHAR},
+      </if>
+      <if test="page9 != null" >
+        page9 = #{page9,jdbcType=VARCHAR},
+      </if>
+      <if test="page10 != null" >
+        page10 = #{page10,jdbcType=VARCHAR},
+      </if>
+      <if test="page11 != null" >
+        page11 = #{page11,jdbcType=VARCHAR},
+      </if>
+      <if test="page12 != null" >
+        page12 = #{page12,jdbcType=VARCHAR},
+      </if>
+      <if test="page13 != null" >
+        page13 = #{page13,jdbcType=VARCHAR},
+      </if>
+      <if test="page14 != null" >
+        page14 = #{page14,jdbcType=VARCHAR},
+      </if>
+      <if test="page15 != null" >
+        page15 = #{page15,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.vergil.springboot.demo.dao.model.CoreUser" >
+    update core_user
+    set guid = #{guid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      loginname = #{loginname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=CHAR},
+      admin = #{admin,jdbcType=CHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      parent_userid = #{parentUserid,jdbcType=INTEGER},
+      org_id = #{orgId,jdbcType=INTEGER},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      workid = #{workid,jdbcType=VARCHAR},
+      page1 = #{page1,jdbcType=VARCHAR},
+      page2 = #{page2,jdbcType=VARCHAR},
+      page3 = #{page3,jdbcType=VARCHAR},
+      page4 = #{page4,jdbcType=VARCHAR},
+      page5 = #{page5,jdbcType=VARCHAR},
+      page6 = #{page6,jdbcType=VARCHAR},
+      page7 = #{page7,jdbcType=VARCHAR},
+      page8 = #{page8,jdbcType=VARCHAR},
+      page9 = #{page9,jdbcType=VARCHAR},
+      page10 = #{page10,jdbcType=VARCHAR},
+      page11 = #{page11,jdbcType=VARCHAR},
+      page12 = #{page12,jdbcType=VARCHAR},
+      page13 = #{page13,jdbcType=VARCHAR},
+      page14 = #{page14,jdbcType=VARCHAR},
+      page15 = #{page15,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

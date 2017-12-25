@@ -10,6 +10,7 @@ import java.util.Map;
  * JDBC工具类
  * Created by ZhangShuzheng on 2017/1/10.
  */
+@SuppressWarnings("rawtypes")
 public class JdbcUtil {
 
 	// 定义数据库的链接
@@ -47,6 +48,7 @@ public class JdbcUtil {
 	}
 
 	// 查询多条记录
+	@SuppressWarnings("unchecked")
 	public List<Map> selectByParams(String sql, List params) throws SQLException {
 		List<Map> list = new ArrayList<> ();
 		int index = 1;

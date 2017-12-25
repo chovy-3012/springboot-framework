@@ -79,6 +79,7 @@ public class SpringContextUtil implements ApplicationContextAware {
 	 * @param beanName
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public static Class getType(String beanName) {
 		return context.getType(beanName);
 	}
