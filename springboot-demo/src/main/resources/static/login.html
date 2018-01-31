@@ -1,46 +1,233 @@
-﻿<!DOCTYPE HTML>
-<html lang="zh-cn">
+<!DOCTYPE HTML>
+<html>
+
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>登录页</title>
+<title>LaySSH开发框架</title>
 
-	<link href="plugins/bootstrap-3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet"/>
-	<link href="plugins/waves-0.7.5/waves.min.css" rel="stylesheet"/>
-	<link href="plugins/checkbix/css/checkbix.min.css" rel="stylesheet"/>
-	<link href="css/login.css" rel="stylesheet"/>
-</head>
-<body>
-<div id="login-window">
-	<div class="input-group m-b-20">
-		<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
-		<div class="fg-line">
-			<input id="username" type="text" class="form-control" name="username" placeholder="帐号" required autofocus value="admin">
-		</div>
-	</div>
-	<div class="input-group m-b-20">
-		<span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
-		<div class="fg-line">
-			<input id="password" type="password" class="form-control" name="password" placeholder="密码" required value="123456">
-		</div>
-	</div>
-	<div class="clearfix">
-	</div>
-	<div class="checkbox">
-		<input id="rememberMe" type="checkbox" class="checkbix" data-text="自动登录" name="rememberMe">
-	</div>
-	<a id="login-bt" href="javascript:;" class="waves-effect waves-button waves-float"><i class="zmdi zmdi-arrow-forward"></i></a>
-</div>
-<script src="plugins/jquery.1.12.4.min.js"></script>
-<script src="plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
-<script src="plugins/waves-0.7.5/waves.min.js"></script>
-<script src="plugins/checkbix/js/checkbix.min.js"></script>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<!-- layUI -->
+<script type="text/javascript" src="/laysq/js/jquery-3.2.0.min.js"></script>
+<link rel="stylesheet" href="/laysq/plugins/layui-v2/css/layui.css" media="all" />
+<script type="text/javascript" src="/laysq/plugins/layui-v2/layui.js"></script>
+<script type="text/javascript" src="/laysq/js/public.js"></script>
+<!-- 公共组件 -->
 
-<script src="js/login.js"></script>
 <script type="text/javascript">
-	Checkbix.init();
+	//数据字典下拉框
+	function pbInitCombox($, form, type, id, value) {
+		$
+				.ajax({
+					url : '/laysq/dictCd/getList.do?' + type,
+					type : 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
+					dataType : 'json',
+					async : true,
+					success : function(data) {
+						//layer.msg(JSON.stringify(data));
+						$("#" + id).html("");
+						$("#" + id).append(
+								'<option selected="" value="">请选择</option>');
+						for (var i = 0; i < data.length; i++) {
+							if (data[i].dictCd == value) {
+								$("#" + id).append(
+										'<option selected="" value='+data[i].dictCd+'>'
+												+ data[i].dictNm + '</option>');
+							} else {
+								$("#" + id).append(
+										'<option value='+data[i].dictCd+'>'
+												+ data[i].dictNm + '</option>');
+							}
+
+						}
+						form.render();//重新渲染
+					}
+				});
+	}
+
+	//普通下拉框
+	function pbInitComCombox($, form, url, id, idField, textField, value) {
+		$
+				.ajax({
+					url : '/laysq/' + url,
+					type : 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
+					dataType : 'json',
+					async : true,
+					success : function(data) {
+						//layer.msg(JSON.stringify(data));
+						$("#" + id).html("");
+						$("#" + id).append(
+								'<option selected="" value="">请选择</option>');
+						for (var i = 0; i < data.length; i++) {
+							if (data[i][idField] == value) {
+								$("#" + id).append(
+										'<option selected="" value='+data[i][idField]+'>'
+												+ data[i][textField]
+												+ '</option>');
+							} else {
+								$("#" + id).append(
+										'<option value='+data[i][idField]+'>'
+												+ data[i][textField]
+												+ '</option>');
+							}
+
+						}
+						form.render();//重新渲染
+					}
+				});
+	}
+
+	/**
+	 * 如： 传输页面：window.location.href = "xxx.html?obj="+
+	 * encodeURIComponent(JSON.stringify(obj)); 接收页面：requestParam =
+	 * getRequestParam(); data = JSON.parse(decodeURIComponent(requestParam.obj));
+	 */
+	function getRequestParam() {
+		var urlInfo = window.location.href;
+		var argsIndex = urlInfo.indexOf("?");
+		var args = urlInfo.substring((argsIndex + 1)).split("&");
+		var argsInfo = "{";
+		for (var i = 0; i < args.length; i++) {
+			var argResult = args[i].split("=");
+			argsInfo = argsInfo + "'" + argResult[0] + "':'" + argResult[1]
+					+ "'";
+			if (i != args.length - 1) {
+				argsInfo += ',';
+			}
+		}
+		argsInfo += "}";
+		return eval('(' + argsInfo + ')');
+	}
+
+	/**
+	 *无权限提示
+	 **/
+	function noAuthTip(res) {
+		if (res.msg != "") {
+			pubUtil.msg(res.msg, layer, 2, function() {
+			}, 20 * 1000);
+		}
+	}
 </script>
+
+
+<style>
+.content {
+	width: 960px;
+	height: 2024px;
+	border: 1px solid #000;
+	margin: 0 auto;
+}
+
+.nav {
+	width: 100%;
+	height: 100px;
+	margin: 0 auto;
+	position: fixed;
+	bottom: 0;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="/laysq/css/login.css"></link>
+<style>
+body {
+	text-align: center
+}
+</style>
+</head>
+<body class="loginbody">
+	<div id="top">
+		<h1 style="margin-top: 25px; color: #FFFFFF">LaySSH快速开发框架</h1>
+	</div>
+	<div id="loginbg" class="loginbg" style="margin: 0 auto; width: 500px; height: 500px;">
+		<div id="login_form" class="login_form">
+			<p class="form_name">登录管理系统</p>
+			<div id="table_login">
+				<form name="loginForm" id="Login_loginForm" method="post" action="">
+					<input type="text" placeholder="请输入用户名" value="test" name="operCd" id="Login_operCd"
+						class="name" /> <input type="password" placeholder="请输入密码" value="888888" class="password"
+						name="operPwd" id="Login_operPwd" />
+					<div class="yzm">
+						<input type="text" placeholder="请输入验证码" class="code" name="code" id="Login_code" /> <img
+							id="Login_code_img" src="/laysq/ImageServlet" style="cursor: pointer;"
+							onclick="changeValidateCode()" title="点击图片刷新验证码" />
+					</div>
+					<button class="layui-btn" style="width: 200px" lay-submit="" lay-filter="btnSubmit">立即登录</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
+<script type="text/javascript">
+	layui.use([ 'form', 'layedit', 'laydate', 'jquery' ], function() {
+		var form = layui.form;
+		var $ = layui.jquery;
+
+		//监听提交
+		form.on('submit(btnSubmit)', function(data) {
+			var operCd = $('#Login_operCd').val();//用户名
+			var operPwd = $('#Login_operPwd').val();//密码
+			var code = $('#Login_code').val();//验证码
+
+			if (operCd == '') {
+				pubUtil.msg("请输入用户名!", layer, 2, function() {
+				}, 3 * 1000);
+				return false;
+			}
+
+			if (operPwd == '') {
+				pubUtil.msg("请输入密码!", layer, 2, function() {
+				}, 3 * 1000);
+				return false;
+			}
+			if (code == '') {
+				pubUtil.msg("请输入验证码！", layer, 2, function() {
+				}, 3 * 1000);
+				return false;
+			}
+			var index = layer.load(1);//开启进度条
+			$.ajax({
+				url : '/laysq/operInf/execute.do',
+				data : {
+					operCd : $("#Login_operCd").val(),
+					operPwd : $("#Login_operPwd").val(),
+					code : $("#Login_code").val()
+				},
+				type : 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
+				dataType : 'json',
+				success : function(obj) {
+					layer.close(index);//关闭   
+					if (obj && obj.success) {
+						layer.close(index);//关闭   
+						window.location.href = "/laysq/" + "main.jsp";
+					} else {
+						layer.close(index);//关闭   
+						changeValidateCode();//修改验证码
+						$('#Login_operPwd').val('');//密码
+						$('#Login_code').val('');//验证码
+						pubUtil.msg(obj.msg, layer, 2, function() {
+						}, 3 * 1000);
+					}
+				}
+			});
+			return false;
+		});
+
+	});
+
+	/**
+	 *刷新验证码
+	 */
+	function changeValidateCode() {
+		var obj = $('#Login_code_img');
+		var timenow = new Date().getTime();
+		var url = "/laysq/ImageServlet?d=" + timenow;
+		$(obj).attr("src", url);
+
+	}
+</script>
 </html>

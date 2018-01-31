@@ -1,5 +1,8 @@
 package io.vergil.springboot.demo.controller;
 
+import java.util.Date;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +28,12 @@ public class HelloController {
 	@ResponseBody
 	public String swagger2(String id) {
 		return "swagger";
+	}
+
+	@RequestMapping("/jsphtml")
+	public String jsphtml(Map<String, Object> model) {
+		model.put("time", new Date());
+		model.put("message", "test");
+		return "index";
 	}
 }
